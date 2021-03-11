@@ -64,13 +64,6 @@ function arrayType(value, path, resolve, traverseCallback) {
   const defaultMinItems = optionAPI('minItems');
   const defaultMaxItems = optionAPI('maxItems');
 
-  if (defaultMinItems) {
-    // fix boundaries
-    minItems = typeof minItems === 'undefined'
-      ? defaultMinItems
-      : Math.min(defaultMinItems, minItems);
-  }
-
   if (defaultMaxItems) {
     maxItems = typeof maxItems === 'undefined'
       ? defaultMaxItems
@@ -80,11 +73,13 @@ function arrayType(value, path, resolve, traverseCallback) {
     if (maxItems && maxItems > defaultMaxItems) {
       maxItems = defaultMaxItems;
     }
+  }
 
-    // Don't allow user to set min items above our maximum
-    if (minItems && minItems > defaultMaxItems) {
-      minItems = maxItems;
-    }
+  if (defaultMinItems) {
+    // fix boundaries
+    minItems = typeof minItems === 'undefined'
+      ? defaultMinItems
+      : Math.min(Math.max(defaultMinItems, minItems), maxItems);
   }
 
   const optionalsProbability = optionAPI('alwaysFakeOptionals') === true ? 1.0 : optionAPI('optionalsProbability');
