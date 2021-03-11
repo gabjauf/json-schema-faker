@@ -6,7 +6,7 @@
   "bin": {
     "jsf": "bin/gen.js"
   },
-  "main": "src/main.cjs.js",
+  "main": "dist/main.cjs.js",
   "module": "dist/main.esm.js",
   "browser": "dist/main.umd.js",
   "unpkg": "dist/bundle.js",
